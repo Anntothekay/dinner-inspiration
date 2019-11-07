@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <meta name="description" content="Dinner Inspiration" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Sacramento&display=swap"
+            rel="stylesheet"
+        />
+        <link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles/style.css" />
+        <title>Dinner Inspiration</title>
+    </head>
+
+    <body>
+        <header>
+            <h1>Dinner Inspiration</h1>
+            <input type="checkbox" id="veggy" name="veggy" value="Veggy" />
+            <label for="veggy">Veggy?</label><br />
+            <button class="button">Inspire Me!</button>
+        </header>
+        <div class="result">
+            <div class="result__placeholder"></div>
+        </div>
+
+        <script>
+            const inspireButton = document.querySelector('button.button');
+            const veggy = document.querySelector('#veggy');
+            inspireButton.addEventListener('click', insertData);
+
+            async function fetchData() {
+                inspireButton.innerHTML = 'Loading Inspiration...';
+                inspireButton.classList.add('loading');
+                const response = await fetch('/dishes.json');
+                if (response.ok) return await response.json();
+                throw new Error(response.statusText);
+            }
+            // async function insertAllData() {
+            //     let html = '';
+            //     try {
+            //         const dishes = await fetchData();
+            //         dishes.forEach((dish, i) => {
+            //             html += `<div class="cards__card ${
+            //                 dish.veggy ? '_veggy' : '_meaty'
+            //             }"><div class="card__image"><img src="${
+            //                 dish.image
+            //             }" alt="${
+            //                 dish.title
+            //             }"></div><div class="card__textbox"><h2 class="card__title">${
+            //                 dish.title
+            //             }</h2><p class="card__description">${
+            //                 dish.description
+            //             }</p></div></div>`;
+            //         });
+            //         document.querySelector('.result').innerHTML = html;
+            //         inspireButton.innerHTML = 'Inspire Me!';
+            //         inspireButton.classList.remove('loading');
+            //         console.log('fetching data and building site done');
+            //     } catch (e) {
+            //         console.log('Error', e);
+            //     }
+            // }
+            async function insertData() {
+                let html = '';
+
+                try {
+                    let dishes = await fetchData();
+
+                    if (veggy.checked) {
+                        dishes = dishes.filter(d => d.veggy === true);
+                    }
+
+                    const randomDish =
+                        dishes[Math.floor(Math.random() * dishes.length)];
+
+                    html += `<div class="cards__card ${
+                        randomDish.veggy ? '_veggy' : '_meaty'
+                    }"><div class="card__image"><img src="${
+                        randomDish.image
+                    }" alt="${
+                        randomDish.title
+                    }"></div><div class="card__textbox"><h2 class="card__title">${
+                        randomDish.title
+                    }</h2><p class="card__description">${
+                        randomDish.description
+                    }</p></div></div>`;
+
+                    document.querySelector('.result').innerHTML = html;
+                    inspireButton.innerHTML = 'Inspire Me!';
+                    inspireButton.classList.remove('loading');
+                    console.log('fetching data and building site done');
+                } catch (e) {
+                    console.log('Error', e);
+                }
+            }
+            // insertData();
+        </script>
+    </body>
+</html>
