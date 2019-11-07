@@ -1,0 +1,34 @@
+[
+    {
+        "dishId": 1,
+        "title": "Pepperoni Pizza",
+        "description": "Uh... yum?",
+        "image": "images/pepperoni_pizza.jpg",
+        "mainIngredients": "Wheat",
+        "veggy": false
+    },
+    {
+        "dishId": 2,
+        "title": "BBQ Burger",
+        "description": "Uh... delicious?",
+        "image": "images/bbq_burger.jpg",
+        "mainIngredients": "Minced Meat",
+        "veggy": false
+    },
+    {
+        "dishId": 3,
+        "title": "Tomato Salad",
+        "description": "Uh... juicy?",
+        "image": "images/tomato_salad.jpg",
+        "mainIngredients": "Tomatoes",
+        "veggy": true
+    },
+    {
+        "dishId": 4,
+        "title": "Pumpkin Soup",
+        "description": "Uh... orange?",
+        "image": "images/pumpkin_soup.jpg",
+        "mainIngredients": "Pumpkins",
+        "veggy": true
+    }
+]
